@@ -1,6 +1,7 @@
 package mycrypt
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 )
@@ -17,20 +18,17 @@ func TestKrypter(t *testing.T) {
 	tests := []test{
 		{inputMessage: []rune("w"), chiffer: 4, want: []rune("æ")},
 		{inputMessage: []rune("0"), chiffer: 4, want: []rune("4")},
-		{inputMessage: []rune("Kjevik;SN39040;18.03.2022 01:50;6"), chiffer: 4, want: []rune("OnizmoCWR7;484C5: 47 6466D45B94C.")},
-		{inputMessage: []rune("OnizmoCWR7;484C5: 47 6466D45B94C."), chiffer: len(ALF_SEM03) - 4, want: []rune("Kjevik;SN39040;18.03.2022 01:50;6")},
+		{inputMessage: []rune("Kjevik;SN39040;18.03.2022 01:50;6"), chiffer: 4, want: []rune("dnizmocdd7;484c5: 47 6466d45b94c.")},
+		{inputMessage: []rune("dnizmocdd7;484c5: 47 6466d45b94c."), chiffer: len(ALF_SEM03) - 4, want: []rune("Kjevik;SN39040;18.03.2022 01:50;6")},
 	}
 
 	for _, tc := range tests {
 		got := Krypter(tc.inputMessage, ALF_SEM03, tc.chiffer)
 		if !reflect.DeepEqual(got, tc.want) {
+			fmt.Println(String(got))
 			t.Errorf("Feil, for chiffer %d, fikk %q, ønsket %q.", tc.chiffer, got, tc.want)
 		}
 	}
-}
-
-func String(got []rune) {
-	panic("unimplemented")
 }
 
 // Posisjonene i alfabetet begynner på 0 fra venstre og teller oppover mot høyre
